@@ -16,40 +16,81 @@ import java.util.Iterator;
  * @version 1.0
  */
 public class TopMusic {
+	/**
+	 * ArrayList para el almacenamiento de un Top de M&uacute;sica.
+	 */
 	ArrayList<Cancion> topMusic;
 
+	/**
+	 * Constructor que inicializa el Top Music.
+	 */
 	TopMusic() {
 		topMusic = new ArrayList<Cancion>();
 	}
 
-	void annadirCancion(Cancion cancion) {
-		topMusic.add(cancion);
-	}
-
-	void annadirCancion(Cancion cancion, int posicion) {
+	/**
+	 * A&ntilde;ade una canci&oacute;n al Top.
+	 * 
+	 * @param cancion
+	 *            Canci&oacute;n.
+	 * @param posicion
+	 *            Posici&oacute;n donde se establecer&aacute; la canci&oacute;n.
+	 * @return Devuelve un mensaje exitoso.
+	 */
+	String annadirCancion(Cancion cancion, int posicion) {
 		topMusic.add(posicion, cancion);
+		return "La canción se ha añadido con éxito.";
 	}
 
-	void eliminarCancion(Cancion cancion) {
+	/**
+	 * Elimina una canci&oacute;n del Top.
+	 * 
+	 * @param cancion
+	 *            Canci&oacute;n.
+	 * @return Devuelve un mensaje exitoso.
+	 */
+	String eliminarCancion(Cancion cancion) {
 		topMusic.remove(cancion);
+		return "La canción se ha eliminado con éxito.";
 	}
 
-	void subirPuesto(Cancion cancion) {
-		// Cancion cancionAux = cancion;
-		// topMusic.set(topMusic.indexOf(cancion),
-		// topMusic.get(topMusic.indexOf(cancion) - 1));
-		// topMusic.set(topMusic.indexOf(cancion) - 1, cancionAux);
+	/**
+	 * Sube de puesto una canci&oacute;n del TopMusic.
+	 * 
+	 * @param cancion
+	 *            Canci&oacute;n.
+	 * @return Devuelve un mensaje exitoso, de lo contrario indica un error.
+	 */
+	String subirPuesto(Cancion cancion) {
+		if (topMusic.indexOf(cancion) == 0 || !topMusic.contains(cancion)) {
+			return "La canción no puede subir más de posición o no existe.";
+		}
 		Collections.swap(topMusic, topMusic.indexOf(cancion), topMusic.indexOf(cancion) - 1);
+		return "La canción ha subido de puesto satisfactoriamente.";
 	}
 
-	void bajarPuesto(Cancion cancion) {
-		// Cancion cancionAux = cancion;
-		// topMusic.set(topMusic.indexOf(cancion),
-		// topMusic.get(topMusic.indexOf(cancion) + 1));
-		// topMusic.set(topMusic.indexOf(cancion) + 1, cancionAux);
+	/**
+	 * Baja de puesto a una canci&oacute;n.
+	 * 
+	 * @param cancion
+	 *            Canci&oacte;n.
+	 * @return Devuelve un mensaje exitoso, de lo contrario indicar&aacute; un
+	 *         error.
+	 */
+	String bajarPuesto(Cancion cancion) {
+		if (topMusic.indexOf(cancion) == topMusic.size() - 1 || !topMusic.contains(cancion)) {
+			return "La canción no puede bajar más de posición o no existe.";
+		}
 		Collections.swap(topMusic, topMusic.indexOf(cancion), topMusic.indexOf(cancion) + 1);
+		return "La canción ha bajado de puesto satisfactoriamente.";
 	}
 
+	/**
+	 * Muestra el Top Music.
+	 * 
+	 * @return Devuelve una cadena concatenada mostrando con un iterador todo el
+	 *         Top Music.
+	 */
 	String mostrarTopMusic() {
 		Iterator<Cancion> iterator = topMusic.iterator();
 		String cadena = "";
@@ -60,7 +101,49 @@ public class TopMusic {
 		return cadena;
 	}
 
+	/**
+	 * Busca una canci&oacute;n en el Top Music.
+	 * 
+	 * @param cancion
+	 *            Canci&aocute;n objetivo.
+	 * @return Devuelve la canci&oacute;n encontrada.
+	 */
 	public Cancion buscarElemento(Cancion cancion) {
 		return topMusic.get(topMusic.indexOf(cancion));
+	}
+
+	/**
+	 * Muestra la canci&oacute;n m&aacute;s escuchada junto a un mensaje.
+	 * 
+	 * @return Devuelve un mensaje con la canci&oacute;n concatenada.
+	 */
+	public String masEscuchada() {
+		if (topMusic.size() == 0) {
+			return "No se encuentran canciones en el top..";
+		}
+		return " La canción mas escuchada es " + topMusic.get(0);
+	}
+
+	/**
+	 * Muestra el tama&ntilde;o del Top Music.
+	 * 
+	 * @return Devuelve el tama&ntilde;o del Top Music.
+	 */
+	int size() {
+		return topMusic.size();
+	}
+
+	/**
+	 * Muestra el Top Music.
+	 */
+	@Override
+	public String toString() {
+		Iterator<Cancion> iterator = topMusic.iterator();
+		String cadena = "";
+		int i = 1;
+		while (iterator.hasNext()) {
+			cadena += "Puesto " + (i++) + ": " + iterator.next();
+		}
+		return cadena;
 	}
 }

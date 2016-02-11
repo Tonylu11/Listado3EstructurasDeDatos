@@ -13,21 +13,36 @@ package topMusic;
  *
  */
 public class Cancion {
+	/**
+	 * Nombre de la canci&oacute;n.
+	 */
 	private String nombre;
+	/**
+	 * Artista de la canci&oacute;n.
+	 */
 	private String artista;
+	/**
+	 * A&ntilde;o de grabaci&oacute;n de la cancioacute;n.
+	 */
 	private String annoGrabacion;
 
+	/**
+	 * Constructor para la creaci&oacute;n de una canci&oacute;n.
+	 * 
+	 * @param nombre
+	 *            Nombre de la canci&oacute;n.
+	 * @param artista
+	 *            Artista de la canci&oacute;n.
+	 * @param annoGrabacion
+	 *            A&ntilde;o de grabaci&oacute;n de la cancioacute;n.
+	 */
 	Cancion(String nombre, String artista, String annoGrabacion) {
-		this.nombre = nombre;
-		this.artista = artista;
-		this.annoGrabacion = annoGrabacion;
+		setNombre(nombre);
+		setArtista(artista);
+		setAnnoGrabacion(annoGrabacion);
 	}
 
-	public Cancion(String nombre) {
-		this.nombre = nombre;
-	}
-
-	String getNombre() {
+	public String getNombre() {
 		return nombre;
 	}
 
@@ -35,7 +50,7 @@ public class Cancion {
 		this.nombre = nombre;
 	}
 
-	String getArtista() {
+	public String getArtista() {
 		return artista;
 	}
 
@@ -43,7 +58,7 @@ public class Cancion {
 		this.artista = artista;
 	}
 
-	String getAnnoGrabacion() {
+	public String getAnnoGrabacion() {
 		return annoGrabacion;
 	}
 
@@ -51,6 +66,21 @@ public class Cancion {
 		this.annoGrabacion = annoGrabacion;
 	}
 
+	/**
+	 * Constructor para la eliminaci&oacute;n de una canci&oacute;n del top
+	 * mediante su nombre.
+	 * 
+	 * @param nombre
+	 *            Nombre de la canci&oacute;n.
+	 */
+	public Cancion(String nombre) {
+		this.nombre = nombre;
+	}
+
+	/**
+	 * M&eacute;todo para mostrar tanto el nombre como el artista/grupo y el
+	 * a&ntilde;o de grabaci&oacute;n de la canci&oacute;n.
+	 */
 	@Override
 	public String toString() {
 		return "\n\tCancion: " + nombre + "\n\tArtista: " + artista + "\n\tAño de grabación: " + annoGrabacion + "\n";
@@ -80,5 +110,4 @@ public class Cancion {
 			return false;
 		return true;
 	}
-
 }
