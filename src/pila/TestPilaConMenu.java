@@ -59,7 +59,7 @@ public class TestPilaConMenu {
 	 * elimina personas de la pila.
 	 */
 	private static void extraerPersonas() {
-		if (!pila.IsEmpty()) {
+		if (!pila.isEmpty()) {
 			System.out.println("Eliminado " + pila.extraer());
 		} else
 			System.out.println("No hay ningún elemento en la pila..");
@@ -70,7 +70,7 @@ public class TestPilaConMenu {
 	 * muestra la cima de la pila.
 	 */
 	private static void mostrarCima() {
-		if (!pila.IsEmpty()) {
+		if (!pila.isEmpty()) {
 			System.out.println("En la cima de la pila está " + pila.cima());
 		} else
 			System.out.println("No hay ningún elemento en la pila..");
@@ -90,9 +90,9 @@ public class TestPilaConMenu {
 	 * vac&iacute;a
 	 */
 	private static void desapilarCompletamente() {
-		if (pila.IsEmpty())
+		if (pila.isEmpty())
 			System.out.println("La pila está vacía..");
-		while (!pila.IsEmpty())
+		while (!pila.isEmpty())
 			System.out.println("Desapilo de la pila: " + pila.extraer());
 	}
 }

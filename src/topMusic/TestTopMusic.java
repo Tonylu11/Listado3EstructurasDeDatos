@@ -16,13 +16,14 @@ import utiles.Teclado;
  */
 public class TestTopMusic {
 	static TopMusic topMusic = new TopMusic();
-	static Menu menuTopMusic = new Menu("Top Music.",
-			new String[] { "Añadir una canción..", "Eliminar canción..", "Subir de puesto una canción..",
-					"Bajar de puesto una canción..", "Mostrar Top Music..", "Mostrar la canción más escuchada..",
-					"Salir." });
 
 	public static void main(String[] args) {
 		int opcion;
+		Menu menuTopMusic = new Menu("Top Music.",
+				new String[] { "Añadir una canción..", "Eliminar canción..", "Subir de puesto una canción..",
+						"Bajar de puesto una canción..", "Mostrar Top Music..", "Mostrar la canción más escuchada..",
+						"Salir." });
+
 		do {
 			opcion = menuTopMusic.gestionar();
 			switch (opcion) {
@@ -42,9 +43,7 @@ public class TestTopMusic {
 				System.out.println(topMusic);// Mostrar el top.
 				break;
 			case 6:
-				System.out.println(topMusic.masEscuchada());// Mostrar canción
-															// del top más
-															// escuchada
+				mostrarMasEscuchada();
 				break;
 			case 7:
 				System.out.println("Adiooooos..");
@@ -54,37 +53,84 @@ public class TestTopMusic {
 	}
 
 	/**
+	 * Muestra la canci&oacute;n que est&aacute; en la primera posici&oacute;n
+	 * del Top.
+	 */
+	private static void mostrarMasEscuchada() {
+		try {
+			System.out.println(topMusic.masEscuchada());
+		} catch (TopVacioException e) {
+			System.err.println("El Top no contiene ninguna canción..");
+		} // Mostrar canción
+			// del top más
+			// escuchada
+	}
+
+	/**
 	 * Baja de puesto a una canción en el Top Music.
 	 */
 	private static void bajarPuesto() {
-		System.out.println(
-				topMusic.bajarPuesto(new Cancion(pedirAnnoGrabacionCancion("Introduce el nombre de la canción: "))));
+		try {
+			System.out.println(
+					topMusic.bajarPuesto(new Cancion(pedirNombreCancion("Introduce el nombre de la canción: "))));
+		} catch (NombreNoValidoException e) {
+			System.err.println("El nombre de la canción no es válido..");
+		} catch (PuestoInvalidoException e) {
+			System.out.println("El puesto de esa canción no puede disminuir más..");
+		} catch (CancionNoExisteException e) {
+			System.err.println("La canción no existe..");
+		}
 	}
 
 	/**
 	 * Sube de puesto a una canción en el Top Music.
 	 */
 	private static void subirPuesto() {
-		System.out
-				.println(topMusic.subirPuesto(new Cancion(pedirNombreCancion("Introduce el nombre de la canción: "))));
+		try {
+			System.out.println(
+					topMusic.subirPuesto(new Cancion(pedirNombreCancion("Introduce el nombre de la canción: "))));
+		} catch (NombreNoValidoException e) {
+			System.err.println("El nombre de la canción no es válido..");
+		} catch (PuestoInvalidoException e) {
+			System.err.println("El puesto de esa canción no puede aumentar más..");
+		} catch (CancionNoExisteException e) {
+			System.err.println("La canción no existe..");
+		}
 	}
 
 	/**
 	 * Elimina una canci&oacute;n del Top Music.
 	 */
 	private static void sacarCancion() {
-		topMusic.eliminarCancion(new Cancion(pedirNombreCancion("Introduce el nombre de la canción: ")));
+		try {
+			System.out.println(
+					topMusic.eliminarCancion(new Cancion(pedirNombreCancion("Introduce el nombre de la canción: "))));
+		} catch (NombreNoValidoException e) {
+			System.err.println("El nombre de la canción no es válido..");
+		} catch (CancionNoExisteException e) {
+			System.err.println("La canción no existe..");
+		}
 	}
 
 	/**
 	 * A&ntilde;ade una canci&oacute;n al Top Music.
 	 */
 	private static void annadirCancion() {
-		topMusic.annadirCancion(
-				new Cancion(pedirNombreCancion("Introduce el nombre de la canción: "),
-						pedirArtistaCancion("Introduce el artista o grupo autor: "),
-						pedirAnnoGrabacionCancion("Introduce el año de grabación de la canción: ")),
-				pedirPosicion("Dame la posición donde se añadirá la canción."));
+		try {
+			System.out.println(topMusic.annadirCancion(
+					new Cancion(pedirNombreCancion("Introduce el nombre de la canción: "),
+							pedirArtistaCancion("Introduce el artista o grupo autor: "),
+							pedirAnnoGrabacionCancion("Introduce el año de grabación de la canción: ")),
+					pedirPosicion("Dame la posición donde se añadirá la canción.")));
+		} catch (NombreNoValidoException e) {
+			System.err.println("El nombre de la canción no es válido..");
+		} catch (ArtistaNoValidoException e) {
+			System.err.println("El artista de la canción no es válido..");
+		} catch (AnnoGrabacionNoValidoException e) {
+			System.err.println("El año de grabación de la canción no es válido..");
+		} catch (PosicionNoValidaException e) {
+			System.err.println("La posición de la canción no es válida..");
+		}
 	}
 
 	/**
@@ -96,11 +142,7 @@ public class TestTopMusic {
 	 *         canci&oacute;n.
 	 */
 	private static int pedirPosicion(String msj) {
-		int opcion = 0;
-		do {
-			opcion = Teclado.leerEntero(msj);
-		} while (opcion > topMusic.size());
-		return opcion;
+		return Teclado.leerEntero(msj) - 1;
 	}
 
 	/**

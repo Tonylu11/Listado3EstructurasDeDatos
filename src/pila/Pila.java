@@ -27,7 +27,7 @@ public class Pila<T> {
 	/**
 	 * pila de tipo ArrayList.
 	 */
-	ArrayList<T> pila;
+	private ArrayList<T> pila;
 
 	/**
 	 * Inicializaci&oacute;n de la pila.
@@ -73,10 +73,8 @@ public class Pila<T> {
 	 * 
 	 * @return Devuelve true si est&aacute; vac&iacute;a, false si no.
 	 */
-	public boolean IsEmpty() {
-		if (pila.isEmpty())
-			return true;
-		return false;
+	public boolean isEmpty() {
+		return pila.isEmpty();
 	}
 
 	/**

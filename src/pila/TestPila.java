@@ -45,7 +45,7 @@ public class TestPila {
 																			// último
 																			// elemento
 																			// añadido.
-		while (!pila.IsEmpty())
+		while (!pila.isEmpty())
 			System.out.println("Desapilo de la pila: " + pila.extraer());
 		System.out.println(pila);
 	}

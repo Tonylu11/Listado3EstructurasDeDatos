@@ -31,10 +31,18 @@ package listaDeLaCompra;
 public class TestListaDeLaCompra {
 	public static void main(String[] args) {
 		ListaDeLaCompra listaDeLaCompra = new ListaDeLaCompra();
-		listaDeLaCompra.annadir(new Articulo("latas de cerveza", 10, 14));
-		listaDeLaCompra.annadir(new Articulo("latas de fabada", 10, 14));
+		try {
+			listaDeLaCompra.annadir(new Articulo("latas de cerveza", 10, 14));
+		} catch (NombreNoValidoException e) {
+			System.err.println("El nombre no es válido.");
+		}
+		try {
+			listaDeLaCompra.annadir(new Articulo("latas de fabada", 10, 14));
+		} catch (NombreNoValidoException e) {
+			System.err.println("El nombre no es válido.");
+		}
 		System.out.println(listaDeLaCompra);
-		listaDeLaCompra.consumirExistencias(5,"latas de fabada");
+		listaDeLaCompra.consumirExistencias(5, "latas de cerveza");
 		System.out.println(listaDeLaCompra);
 	}
 }

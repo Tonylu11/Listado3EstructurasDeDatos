@@ -35,8 +35,15 @@ public class Cancion {
 	 *            Artista de la canci&oacute;n.
 	 * @param annoGrabacion
 	 *            A&ntilde;o de grabaci&oacute;n de la cancioacute;n.
+	 * @throws NombreNoValidoException
+	 *             Cuando no contiene nada el campo Nombre.
+	 * @throws ArtistaNoValidoException
+	 *             Cuando no contiene nada el campo Artista.
+	 * @throws AnnoGrabacionNoValidoException
+	 *             Cuando no contiene nada el campo AnnoGrabacion.
 	 */
-	Cancion(String nombre, String artista, String annoGrabacion) {
+	Cancion(String nombre, String artista, String annoGrabacion)
+			throws NombreNoValidoException, ArtistaNoValidoException, AnnoGrabacionNoValidoException {
 		setNombre(nombre);
 		setArtista(artista);
 		setAnnoGrabacion(annoGrabacion);
@@ -46,7 +53,9 @@ public class Cancion {
 		return nombre;
 	}
 
-	private void setNombre(String nombre) {
+	private void setNombre(String nombre) throws NombreNoValidoException {
+		if (nombre.length() == 0)
+			throw new NombreNoValidoException();
 		this.nombre = nombre;
 	}
 
@@ -54,7 +63,9 @@ public class Cancion {
 		return artista;
 	}
 
-	private void setArtista(String artista) {
+	private void setArtista(String artista) throws ArtistaNoValidoException {
+		if (artista.length() == 0)
+			throw new ArtistaNoValidoException();
 		this.artista = artista;
 	}
 
@@ -62,7 +73,9 @@ public class Cancion {
 		return annoGrabacion;
 	}
 
-	private void setAnnoGrabacion(String annoGrabacion) {
+	private void setAnnoGrabacion(String annoGrabacion) throws AnnoGrabacionNoValidoException {
+		if (annoGrabacion.length() == 0)
+			throw new AnnoGrabacionNoValidoException();
 		this.annoGrabacion = annoGrabacion;
 	}
 
@@ -72,18 +85,11 @@ public class Cancion {
 	 * 
 	 * @param nombre
 	 *            Nombre de la canci&oacute;n.
+	 * @throws NombreNoValidoException
+	 *             Cuando el nombre no contiene nada.
 	 */
-	public Cancion(String nombre) {
-		this.nombre = nombre;
-	}
-
-	/**
-	 * M&eacute;todo para mostrar tanto el nombre como el artista/grupo y el
-	 * a&ntilde;o de grabaci&oacute;n de la canci&oacute;n.
-	 */
-	@Override
-	public String toString() {
-		return "\n\tCancion: " + nombre + "\n\tArtista: " + artista + "\n\tAño de grabación: " + annoGrabacion + "\n";
+	public Cancion(String nombre) throws NombreNoValidoException {
+		setNombre(nombre);
 	}
 
 	@Override
@@ -109,5 +115,14 @@ public class Cancion {
 		} else if (!nombre.equals(other.nombre))
 			return false;
 		return true;
+	}
+
+	/**
+	 * M&eacute;todo para mostrar tanto el nombre como el artista/grupo y el
+	 * a&ntilde;o de grabaci&oacute;n de la canci&oacute;n.
+	 */
+	@Override
+	public String toString() {
+		return "\n\tCancion: " + nombre + "\n\tArtista: " + artista + "\n\tAño de grabación: " + annoGrabacion + "\n";
 	}
 }

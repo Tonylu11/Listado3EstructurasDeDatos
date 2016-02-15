@@ -19,7 +19,7 @@ public class TopMusic {
 	/**
 	 * ArrayList para el almacenamiento de un Top de M&uacute;sica.
 	 */
-	ArrayList<Cancion> topMusic;
+	private ArrayList<Cancion> topMusic;
 
 	/**
 	 * Constructor que inicializa el Top Music.
@@ -36,8 +36,12 @@ public class TopMusic {
 	 * @param posicion
 	 *            Posici&oacute;n donde se establecer&aacute; la canci&oacute;n.
 	 * @return Devuelve un mensaje exitoso.
+	 * @throws PosicionNoValidaException
+	 *             Cuando la posici&oacute;n no es v&aacute;lida.
 	 */
-	String annadirCancion(Cancion cancion, int posicion) {
+	String annadirCancion(Cancion cancion, int posicion) throws PosicionNoValidaException {
+		if (posicion > topMusic.size() || posicion < 0)
+			throw new PosicionNoValidaException();
 		topMusic.add(posicion, cancion);
 		return "La canción se ha añadido con éxito.";
 	}
@@ -48,8 +52,12 @@ public class TopMusic {
 	 * @param cancion
 	 *            Canci&oacute;n.
 	 * @return Devuelve un mensaje exitoso.
+	 * @throws CancionNoExisteException
+	 *             Cuando la canci&oacute;n no existe en el top.
 	 */
-	String eliminarCancion(Cancion cancion) {
+	String eliminarCancion(Cancion cancion) throws CancionNoExisteException {
+		if (!topMusic.contains(cancion))
+			throw new CancionNoExisteException();
 		topMusic.remove(cancion);
 		return "La canción se ha eliminado con éxito.";
 	}
@@ -60,10 +68,18 @@ public class TopMusic {
 	 * @param cancion
 	 *            Canci&oacute;n.
 	 * @return Devuelve un mensaje exitoso, de lo contrario indica un error.
+	 * @throws PuestoInvalidoException
+	 *             Cuando el puesto de la canci&oacute;n en el top es el maximo.
+	 * @throws CancionNoExisteException
+	 *             Cuando la canci&oacute;n no existe en el top.
+	 * @throws NombreNoValidoException
+	 *             Cuando el nombre no es v&aacute;lido.
 	 */
-	String subirPuesto(Cancion cancion) {
-		if (topMusic.indexOf(cancion) == 0 || !topMusic.contains(cancion)) {
-			return "La canción no puede subir más de posición o no existe.";
+	String subirPuesto(Cancion cancion) throws PuestoInvalidoException, CancionNoExisteException {
+		if (topMusic.indexOf(cancion) == 0) {
+			throw new PuestoInvalidoException();
+		} else if (!topMusic.contains(cancion)) {
+			throw new CancionNoExisteException();
 		}
 		Collections.swap(topMusic, topMusic.indexOf(cancion), topMusic.indexOf(cancion) - 1);
 		return "La canción ha subido de puesto satisfactoriamente.";
@@ -74,31 +90,20 @@ public class TopMusic {
 	 * 
 	 * @param cancion
 	 *            Canci&oacte;n.
-	 * @return Devuelve un mensaje exitoso, de lo contrario indicar&aacute; un
-	 *         error.
+	 * @return Devuelve un mensaje exitoso.
+	 * @throws PuestoInvalidoException
+	 *             Cuando el puesto de la canci&oacute;n en el top es el maximo.
+	 * @throws CancionNoExisteException
+	 *             Cuando la canci&oacute;n no existe en el top.
 	 */
-	String bajarPuesto(Cancion cancion) {
-		if (topMusic.indexOf(cancion) == topMusic.size() - 1 || !topMusic.contains(cancion)) {
-			return "La canción no puede bajar más de posición o no existe.";
+	String bajarPuesto(Cancion cancion) throws PuestoInvalidoException, CancionNoExisteException {
+		if (topMusic.indexOf(cancion) == topMusic.size() - 1) {
+			throw new PuestoInvalidoException();
+		} else if (!topMusic.contains(cancion)) {
+			throw new CancionNoExisteException();
 		}
 		Collections.swap(topMusic, topMusic.indexOf(cancion), topMusic.indexOf(cancion) + 1);
 		return "La canción ha bajado de puesto satisfactoriamente.";
-	}
-
-	/**
-	 * Muestra el Top Music.
-	 * 
-	 * @return Devuelve una cadena concatenada mostrando con un iterador todo el
-	 *         Top Music.
-	 */
-	String mostrarTopMusic() {
-		Iterator<Cancion> iterator = topMusic.iterator();
-		String cadena = "";
-		int i = 1;
-		while (iterator.hasNext()) {
-			cadena += "Puesto " + (i++) + ": " + iterator.next();
-		}
-		return cadena;
 	}
 
 	/**
@@ -116,21 +121,14 @@ public class TopMusic {
 	 * Muestra la canci&oacute;n m&aacute;s escuchada junto a un mensaje.
 	 * 
 	 * @return Devuelve un mensaje con la canci&oacute;n concatenada.
+	 * @throws TopVacioException
+	 *             Cuando el top est&aacute; vac&iacute;o.
 	 */
-	public String masEscuchada() {
+	public String masEscuchada() throws TopVacioException {
 		if (topMusic.size() == 0) {
-			return "No se encuentran canciones en el top..";
+			throw new TopVacioException();
 		}
 		return " La canción mas escuchada es " + topMusic.get(0);
-	}
-
-	/**
-	 * Muestra el tama&ntilde;o del Top Music.
-	 * 
-	 * @return Devuelve el tama&ntilde;o del Top Music.
-	 */
-	int size() {
-		return topMusic.size();
 	}
 
 	/**

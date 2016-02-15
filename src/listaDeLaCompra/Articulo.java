@@ -33,13 +33,22 @@ public class Articulo {
 	private int cantidadMinima;
 	private int existencias;
 
-	Articulo(String nombre, int cantidadMinima, int existencias) {
+	Articulo(String nombre, int cantidadMinima, int existencias) throws NombreNoValidoException {
 		setNombre(nombre);
 		setCantidadMinima(cantidadMinima);
 		setExistencias(existencias);
 	}
 
-	Articulo(String nombre) {
+//	private Articulo crearArticulo(String nombre, int cantidadMinima, int existencias) throws NombreNoValidoException {
+//		if (nombre == null || cantidadMinima == 0 || existencias == 0)
+//			return null;
+//		setNombre(nombre);
+//		setCantidadMinima(cantidadMinima);
+//		setExistencias(existencias);
+//		return null;
+//	}
+
+	Articulo(String nombre) throws NombreNoValidoException {
 		setNombre(nombre);
 	}
 
@@ -47,7 +56,9 @@ public class Articulo {
 		return nombre;
 	}
 
-	private void setNombre(String nombre) {
+	private void setNombre(String nombre) throws NombreNoValidoException {
+		if (nombre.length() == 0)
+			throw new NombreNoValidoException();
 		this.nombre = nombre;
 	}
 
