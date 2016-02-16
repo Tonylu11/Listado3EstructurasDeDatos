@@ -50,10 +50,11 @@ public class Cola<T> {
 	 * Extrae/Elimina un elemento de la cola.
 	 * 
 	 * @return Devuelve el elemento borrado.
+	 * @throws ColaVaciaException
 	 */
-	T extraer() {
+	T extraer() throws ColaVaciaException {
 		if (cola.size() == 0)
-			return null;
+			throw new ColaVaciaException();
 		return cola.remove(0);
 	}
 
@@ -62,9 +63,9 @@ public class Cola<T> {
 	 * 
 	 * @return Devuelve el elemento.
 	 */
-	T cabeza() {
+	T cabeza() throws ColaVaciaException {
 		if (cola.size() == 0)
-			return null;
+			throw new ColaVaciaException();
 		return cola.get(0);
 	}
 
@@ -74,9 +75,7 @@ public class Cola<T> {
 	 * @return Devuelve true si est&aacute; vac&iacute;a, false si no.
 	 */
 	public boolean IsEmpty() {
-		if (cola.isEmpty())
-			return true;
-		return false;
+		return cola.isEmpty();
 	}
 
 	/**
@@ -85,6 +84,12 @@ public class Cola<T> {
 	@Override
 	public String toString() {
 		return "" + cola + "";
+	}
+
+	public String mostrar() throws ColaVaciaException {
+		if (cola.size() == 0)
+			throw new ColaVaciaException();
+		return cola.toString();
 	}
 
 }

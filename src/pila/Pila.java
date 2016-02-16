@@ -50,10 +50,11 @@ public class Pila<T> {
 	 * Elimina elementos de la pila.
 	 * 
 	 * @return Devuelve el elemento eliminado.
+	 * @throws PilaVaciaException
 	 */
-	T extraer() {
+	T extraer() throws PilaVaciaException {
 		if (pila.size() == 0)
-			return null;
+			throw new PilaVaciaException();
 		return pila.remove(pila.size() - 1);
 	}
 
@@ -62,9 +63,9 @@ public class Pila<T> {
 	 * 
 	 * @return Devuelve la cima de la pila.
 	 */
-	T cima() {
+	T cima() throws PilaVaciaException {
 		if (pila.size() == 0)
-			return null;
+			throw new PilaVaciaException();
 		return pila.get(pila.size() - 1);
 	}
 

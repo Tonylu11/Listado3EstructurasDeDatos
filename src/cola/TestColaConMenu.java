@@ -63,42 +63,51 @@ public class TestColaConMenu {
 	/**
 	 * Muestra la cola, si est&aacute; vac&iacute;a mostrar&aacute; un mensaje
 	 * diciendo que est&aacute; vac&iacute;a.
+	 * 
+	 * @return
 	 */
 	private static void mostrarCola() {
-		if (cola.IsEmpty())
-			System.out.println("La cola está vacía..");
-		else
-			System.out.println(cola);
+		try {
+			System.out.println(cola.mostrar());
+		} catch (ColaVaciaException e) {
+			System.err.println("La cola está vacía..");
+		}
 	}
 
 	/**
 	 * Elimina personas de la cola.
 	 */
 	private static void extraerPersonas() {
-		if (!cola.IsEmpty()) {
+		try {
 			System.out.println("Eliminado " + cola.extraer());
-		} else
-			System.out.println("No hay ningún elemento en la cola..");
-
+		} catch (ColaVaciaException e) {
+			System.err.println("La cola está vacía..");
+		}
 	}
 
 	/**
 	 * Muestra el primer elemento de la cola (cabeza de la cola).
 	 */
 	private static void mostrarCabeza() {
-		if (!cola.IsEmpty()) {
+		try {
 			System.out.println("En la cabeza de la cola está " + cola.cabeza());
-		} else
-			System.out.println("No hay ningún elemento en la cola..");
-
+		} catch (ColaVaciaException e) {
+			System.err.println("La cola está vacía..");
+		}
 	}
 
 	/**
 	 * A&ntilde;ade personas a la cola.
 	 */
 	private static void annadirPersonas() {
-		cola.annadir(new Persona(Teclado.leerCadena("Nombre de la persona."),
-				Teclado.leerCadena("Apellidos de la persona.")));
+		try {
+			cola.annadir(new Persona(Teclado.leerCadena("Nombre de la persona."),
+					Teclado.leerCadena("Apellidos de la persona.")));
+		} catch (NombreNoValidoException e) {
+			System.err.println("El nombre de la persona no es válido..");
+		} catch (ApellidosInvalidosException e) {
+			System.err.println("Los apellidos de la persona no son válidos..");
+		}
 	}
 
 	/**
@@ -106,9 +115,11 @@ public class TestColaConMenu {
 	 * vac&iacute;a
 	 */
 	private static void extraerCompletamente() {
-		if (cola.IsEmpty())
-			System.out.println("La cola está vacía..");
 		while (!cola.IsEmpty())
-			System.out.println("Extraigo de la cola: " + cola.extraer());
+			try {
+				System.out.println("Extraigo de la cola: " + cola.extraer());
+			} catch (ColaVaciaException e) {
+				System.err.println("La cola está vacía..");
+			}
 	}
 }

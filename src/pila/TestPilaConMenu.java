@@ -59,10 +59,11 @@ public class TestPilaConMenu {
 	 * elimina personas de la pila.
 	 */
 	private static void extraerPersonas() {
-		if (!pila.isEmpty()) {
+		try {
 			System.out.println("Eliminado " + pila.extraer());
-		} else
-			System.out.println("No hay ningún elemento en la pila..");
+		} catch (PilaVaciaException e) {
+			System.err.println("La pila está vacía..");
+		}
 	}
 
 	/**
@@ -70,10 +71,11 @@ public class TestPilaConMenu {
 	 * muestra la cima de la pila.
 	 */
 	private static void mostrarCima() {
-		if (!pila.isEmpty()) {
+		try {
 			System.out.println("En la cima de la pila está " + pila.cima());
-		} else
-			System.out.println("No hay ningún elemento en la pila..");
+		} catch (PilaVaciaException e) {
+			System.err.println("La pila está vacía..");
+		}
 
 	}
 
@@ -90,9 +92,11 @@ public class TestPilaConMenu {
 	 * vac&iacute;a
 	 */
 	private static void desapilarCompletamente() {
-		if (pila.isEmpty())
-			System.out.println("La pila está vacía..");
 		while (!pila.isEmpty())
-			System.out.println("Desapilo de la pila: " + pila.extraer());
+			try {
+				System.out.println("Desapilo de la pila: " + pila.extraer());
+			} catch (PilaVaciaException e) {
+				System.err.println("La pila está vacía..");
+			}
 	}
 }

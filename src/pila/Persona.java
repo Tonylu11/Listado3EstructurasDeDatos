@@ -29,6 +29,26 @@ class Persona {
 		this.apellidos = apellidos;
 	}
 
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) throws NombreInvalidoException {
+		if (nombre.length() == 0)
+			throw new NombreInvalidoException();
+		this.nombre = nombre;
+	}
+
+	public String getApellidos() {
+		return apellidos;
+	}
+
+	public void setApellidos(String apellidos) throws ApellidosInvalidosException {
+		if (apellidos.length() == 0)
+			throw new ApellidosInvalidosException();
+		this.apellidos = apellidos;
+	}
+
 	/**
 	 * Muestra a la persona.
 	 */

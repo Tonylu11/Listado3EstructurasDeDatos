@@ -27,26 +27,38 @@ public class TestPila {
 		pila.apilar(new Persona("Estela", "Muñoz Cordón"));
 		pila.apilar(new Persona("Alberto", "González Ruiz"));
 		System.out.println(pila);
-		System.out.println(pila.extraer() + " Desapilado..");// Desapila el
-																// último
-																// elemento de
-																// la pila.
+		try {
+			System.out.println(pila.extraer() + " Desapilado..");
+		} catch (PilaVaciaException e) {
+			System.err.println("La pila está vacía..");
+		} // Desapila el
+			// último
+			// elemento de
+			// la pila.
 		System.out.println(pila);
-		System.out.println("En la cima de la pila está: " + pila.cima());// Se
-																			// muestra
-																			// la
-																			// cima
-																			// de
-																			// la
-																			// pila,
-																			// es
-																			// decir
-																			// el
-																			// último
-																			// elemento
-																			// añadido.
+		try {
+			System.out.println("En la cima de la pila está: " + pila.cima());
+		} catch (PilaVaciaException e) {
+			System.err.println("La pila está vacía..");
+		} // Se
+			// muestra
+			// la
+			// cima
+			// de
+			// la
+			// pila,
+			// es
+			// decir
+			// el
+			// último
+			// elemento
+			// añadido.
 		while (!pila.isEmpty())
-			System.out.println("Desapilo de la pila: " + pila.extraer());
+			try {
+				System.out.println("Desapilo de la pila: " + pila.extraer());
+			} catch (PilaVaciaException e) {
+				System.err.println("La pila está vacía..");
+			}
 		System.out.println(pila);
 	}
 }

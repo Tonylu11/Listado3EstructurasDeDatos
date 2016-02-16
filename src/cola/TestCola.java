@@ -22,7 +22,7 @@ package cola;
  */
 public class TestCola {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NombreNoValidoException, ApellidosInvalidosException {
 		Cola<Persona> cola = new Cola<Persona>();
 		cola.annadir(new Persona("Antonio", "Luque Bravo"));
 		cola.annadir(new Persona("Estela", "Muñoz Cordón"));
@@ -33,37 +33,53 @@ public class TestCola {
 															// Estela Muñoz
 															// Cordón, Alberto
 															// González Ruiz]
-		System.out.println("1. Extrayendo a.. " + cola.extraer());// Extrayendo
-																	// a..
-																	// Antonio
-																	// Luque
-																	// Bravo
-		System.out.println("1. El primero de la cola es: " + cola.cabeza());// La
-																			// cabeza
-																			// de
-																			// la
-																			// cola
-																			// es
-																			// Estela
-																			// Muñoz
-																			// Cordón.
+		try {
+			System.out.println("1. Extrayendo a.. " + cola.extraer());
+		} catch (ColaVaciaException e) {
+			System.err.println("La cola está vacía..");
+		} // Extrayendo
+			// a..
+			// Antonio
+			// Luque
+			// Bravo
+		try {
+			System.out.println("1. El primero de la cola es: " + cola.cabeza());
+		} catch (ColaVaciaException e) {
+			System.err.println("La cola está vacía..");
+		} // La
+			// cabeza
+			// de
+			// la
+			// cola
+			// es
+			// Estela
+			// Muñoz
+			// Cordón.
 		System.out.println("2. Mostrando la cola: " + cola);// Estela Muñoz
 															// Cordón, Alberto
 															// González Ruiz
-		System.out.println("2. Extrayendo a.. " + cola.extraer());// Extrayendo
-																	// a..
-																	// Estela
-																	// Muñoz
-																	// Cordón
-		System.out.println("2. El primero de la cola es: " + cola.cabeza());// El
-																			// primero
-																			// de
-																			// la
-																			// cola
-																			// es:
-																			// Alberto
-																			// González
-																			// Ruiz
+		try {
+			System.out.println("2. Extrayendo a.. " + cola.extraer());
+		} catch (ColaVaciaException e) {
+			System.err.println("La cola está vacía..");
+		} // Extrayendo
+			// a..
+			// Estela
+			// Muñoz
+			// Cordón
+		try {
+			System.out.println("2. El primero de la cola es: " + cola.cabeza());
+		} catch (ColaVaciaException e) {
+			System.err.println("La cola está vacía..");
+		} // El
+			// primero
+			// de
+			// la
+			// cola
+			// es:
+			// Alberto
+			// González
+			// Ruiz
 		System.out.println("3. Mostrando la cola: " + cola);// 3. Mostrando la
 															// cola: [Alberto
 															// González Ruiz]
@@ -80,9 +96,17 @@ public class TestCola {
 															// Florentino Pérez,
 															// Nadia Gutierrez]
 		while (!cola.IsEmpty()) {// Desencolando hasta que la cola esté vacía..
-			System.out.println("Desapilo de la pila con while: " + cola.extraer());
+			try {
+				System.out.println("Desapilo de la pila con while: " + cola.extraer());
+			} catch (ColaVaciaException e) {
+				System.err.println("La cola está vacía..");
+			}
 			System.out.println(cola);
 		}
+		try {
+			System.out.println("Desapilo de la pila con while: " + cola.extraer());
+		} catch (ColaVaciaException e) {
+			System.err.println("La cola está vacía..");
+		}
 	}
-
 }
