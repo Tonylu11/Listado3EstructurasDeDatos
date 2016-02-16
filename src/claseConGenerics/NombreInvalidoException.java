@@ -1,7 +1,7 @@
-package pila;
+package claseConGenerics;
 
 /**
- * Cuando el nombre no posee nada.
+ * Cuando el nombre del animal no posee nada.
  * 
  * @author Antonio Luque Bravo
  * @version 1.0

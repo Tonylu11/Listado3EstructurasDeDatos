@@ -1,6 +1,7 @@
 package claseConGenerics;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Reproduce una clase con Generics. Llámala ClaseConGenerics . Entrega su
@@ -14,18 +15,34 @@ import java.util.ArrayList;
  * @version 1.0
  *
  */
-public class ClaseConGenerics {
-	ArrayList<ClaseConGenerics> collectionParametrizada;
+public class ClaseConGenerics<Animal> {
+	ArrayList<Animal> zoologico;
 
-	public ClaseConGenerics() {
-		collectionParametrizada = new ArrayList<ClaseConGenerics>();
+	ClaseConGenerics() {
+		zoologico = new ArrayList<Animal>();
 	}
 
-	void metodo1(ClaseConGenerics ccg) {
-		collectionParametrizada.add(ccg);
+	void metodo1(Animal animal) throws AnimalYaExisteException {
+		if (zoologico.contains(animal))
+			throw new AnimalYaExisteException();
+		zoologico.add(animal);
 	}
 
-	ClaseConGenerics metodo2(ClaseConGenerics ccg) {
-		return collectionParametrizada.get(0);
+	Animal metodo2() throws ZoologicoVacioException {
+		if (zoologico.isEmpty())
+			throw new ZoologicoVacioException();
+		return zoologico.get(0);
 	}
+
+	@Override
+	public String toString() {
+		Iterator<Animal> it = zoologico.iterator();
+		String cadena = "";
+		int i = 1;
+		while (it.hasNext()) {
+			cadena += "Animal " + (i++) + ": " + it.next();
+		}
+		return cadena;
+	}
+
 }

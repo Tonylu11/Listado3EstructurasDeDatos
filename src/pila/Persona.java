@@ -33,6 +33,14 @@ class Persona {
 		return nombre;
 	}
 
+	/**
+	 * Modifica el estado del campo nombre.
+	 * 
+	 * @param nombre
+	 *            Nombre de la persona.
+	 * @throws NombreInvalidoException
+	 *             Cuando el nombre no es correcto.
+	 */
 	public void setNombre(String nombre) throws NombreInvalidoException {
 		if (nombre.length() == 0)
 			throw new NombreInvalidoException();
@@ -43,6 +51,14 @@ class Persona {
 		return apellidos;
 	}
 
+	/**
+	 * Modifica el estado del campo apellidos.
+	 * 
+	 * @param apellidos
+	 *            Apellidos de la persona.
+	 * @throws ApellidosInvalidosException
+	 *             Cuando los apellidos no son correctos.
+	 */
 	public void setApellidos(String apellidos) throws ApellidosInvalidosException {
 		if (apellidos.length() == 0)
 			throw new ApellidosInvalidosException();

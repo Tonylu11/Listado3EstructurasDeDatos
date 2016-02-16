@@ -53,6 +53,14 @@ public class Cancion {
 		return nombre;
 	}
 
+	/**
+	 * Modifica el estado del campo nombre.
+	 * 
+	 * @param nombre
+	 *            Nombre de la cancion
+	 * @throws NombreNoValidoException
+	 *             Cuando el nombre de la cancion no es valido.
+	 */
 	private void setNombre(String nombre) throws NombreNoValidoException {
 		if (nombre.length() == 0)
 			throw new NombreNoValidoException();
@@ -63,6 +71,14 @@ public class Cancion {
 		return artista;
 	}
 
+	/**
+	 * Modifica el estado del campo artista.
+	 * 
+	 * @param artista
+	 *            artista de la cancion.
+	 * @throws ArtistaNoValidoException
+	 *             Cuando el artista de la cancion no es valido.
+	 */
 	private void setArtista(String artista) throws ArtistaNoValidoException {
 		if (artista.length() == 0)
 			throw new ArtistaNoValidoException();
@@ -73,6 +89,14 @@ public class Cancion {
 		return annoGrabacion;
 	}
 
+	/**
+	 * Modifica el estado del campo a&ntilde;o de grabacion.
+	 * 
+	 * @param annoGrabacion
+	 *            A&ntilde;o de grabacion de la cancion.
+	 * @throws AnnoGrabacionNoValidoException
+	 *             Cuando el a&ntilde;o de grabacion no es valido.
+	 */
 	private void setAnnoGrabacion(String annoGrabacion) throws AnnoGrabacionNoValidoException {
 		if (annoGrabacion.length() == 0)
 			throw new AnnoGrabacionNoValidoException();
