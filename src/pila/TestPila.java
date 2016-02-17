@@ -22,25 +22,19 @@ package pila;
 public class TestPila {
 
 	public static void main(String[] args) {
-		Pila<Persona> pila = new Pila<Persona>();
-		pila.apilar(new Persona("Antonio", "Luque Bravo"));
-		pila.apilar(new Persona("Estela", "Muñoz Cordón"));
-		pila.apilar(new Persona("Alberto", "González Ruiz"));
-		System.out.println(pila);
 		try {
+			Pila<Persona> pila = new Pila<Persona>();
+			pila.apilar(new Persona("Antonio", "Luque Bravo"));
+			pila.apilar(new Persona("Estela", "Muñoz Cordón"));
+			pila.apilar(new Persona("Alberto", "González Ruiz"));
+			System.out.println(pila);
 			System.out.println(pila.extraer() + " Desapilado..");
-		} catch (PilaVaciaException e) {
-			System.err.println("La pila está vacía..");
-		} // Desapila el
+			// Desapila el
 			// último
 			// elemento de
 			// la pila.
-		System.out.println(pila);
-		try {
-			System.out.println("En la cima de la pila está: " + pila.cima());
-		} catch (PilaVaciaException e) {
-			System.err.println("La pila está vacía..");
-		} // Se
+			System.out.println(pila);
+			System.out.println("En la cima de la pila está: " + pila.cima());// Se
 			// muestra
 			// la
 			// cima
@@ -53,12 +47,19 @@ public class TestPila {
 			// último
 			// elemento
 			// añadido.
-		while (!pila.isEmpty())
-			try {
-				System.out.println("Desapilo de la pila: " + pila.extraer());
-			} catch (PilaVaciaException e) {
-				System.err.println("La pila está vacía..");
-			}
-		System.out.println(pila);
+			while (!pila.isEmpty())
+				try {
+					System.out.println("Desapilo de la pila: " + pila.extraer());
+				} catch (PilaVaciaException e) {
+					System.err.println("La pila está vacía..");
+				}
+			System.out.println(pila);
+		} catch (PilaVaciaException e) {
+			System.err.println("La pila está vacía..");
+		} catch (NombreInvalidoException e1) {
+			System.err.println("El nombre no es válido..");
+		} catch (ApellidosInvalidosException e1) {
+			System.err.println("Los apellidos no son válidos..");
+		}
 	}
 }

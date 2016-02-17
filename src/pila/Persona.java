@@ -23,10 +23,12 @@ class Persona {
 	 *            Nombre de la persona.
 	 * @param apellidos
 	 *            Apellidos de la persona.
+	 * @throws NombreInvalidoException
+	 * @throws ApellidosInvalidosException
 	 */
-	Persona(String nombre, String apellidos) {
-		this.nombre = nombre;
-		this.apellidos = apellidos;
+	Persona(String nombre, String apellidos) throws NombreInvalidoException, ApellidosInvalidosException {
+		setNombre(nombre);
+		setApellidos(apellidos);
 	}
 
 	public String getNombre() {

@@ -95,7 +95,7 @@ public class TestCola {
 															// Martinez,
 															// Florentino Pérez,
 															// Nadia Gutierrez]
-		while (!cola.IsEmpty()) {// Desencolando hasta que la cola esté vacía..
+		while (!cola.isEmpty()) {// Desencolando hasta que la cola esté vacía..
 			try {
 				System.out.println("Desapilo de la pila con while: " + cola.extraer());
 			} catch (ColaVaciaException e) {

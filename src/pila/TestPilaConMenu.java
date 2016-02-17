@@ -1,5 +1,6 @@
 package pila;
 
+import cola.ColaVaciaException;
 import utiles.Menu;
 import utiles.Teclado;
 
@@ -45,13 +46,27 @@ public class TestPilaConMenu {
 				desapilarCompletamente();
 				break;
 			case 5:
-				System.out.println(pila);
+				mostrarPila();
 				break;
 			case 6:
 				System.out.println("Adiooos..");
 				break;
 			}
 		} while (opcion != 6);
+	}
+
+	/**
+	 * Muestra la pila, si est&aacute; vac&iacute;a mostrar&aacute; un mensaje
+	 * diciendo que est&aacute; vac&iacute;a.
+	 * 
+	 * @return
+	 */
+	private static void mostrarPila() {
+		try {
+			System.out.println(pila.mostrar());
+		} catch (PilaVaciaException e) {
+			System.err.println("La pila está vacía..");
+		}
 	}
 
 	/**
@@ -83,8 +98,14 @@ public class TestPilaConMenu {
 	 * A&ntilde;ade personas a la pila.
 	 */
 	private static void apilarPersonas() {
-		pila.apilar(new Persona(Teclado.leerCadena("Nombre de la persona."),
-				Teclado.leerCadena("Apellidos de la persona.")));
+		try {
+			pila.apilar(new Persona(Teclado.leerCadena("Nombre de la persona."),
+					Teclado.leerCadena("Apellidos de la persona.")));
+		} catch (NombreInvalidoException e) {
+			System.err.println("El nombre no es válido..");
+		} catch (ApellidosInvalidosException e) {
+			System.err.println("Los apellidos no son válidos..");
+		}
 	}
 
 	/**
@@ -92,11 +113,11 @@ public class TestPilaConMenu {
 	 * vac&iacute;a
 	 */
 	private static void desapilarCompletamente() {
-		while (!pila.isEmpty())
-			try {
-				System.out.println("Desapilo de la pila: " + pila.extraer());
-			} catch (PilaVaciaException e) {
-				System.err.println("La pila está vacía..");
-			}
+		try {
+			System.out.println(pila.extraerCompletamente());
+		} catch (PilaVaciaException e) {
+			System.err.println("La pila está vacía..");
+
+		}
 	}
 }

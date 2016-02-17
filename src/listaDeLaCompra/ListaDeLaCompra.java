@@ -1,6 +1,7 @@
 package listaDeLaCompra;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * ListaDeLaCompra . Implementa un programa que gestione una lista de la compra
@@ -31,50 +32,181 @@ import java.util.ArrayList;
  *
  */
 public class ListaDeLaCompra {
+	/**
+	 * ArrayList de la lista de la compra.
+	 */
 	ArrayList<Articulo> listaDeLaCompra = new ArrayList<Articulo>();
 
-	String annadir(Articulo articulo) {
-		if (listaDeLaCompra.contains(articulo)) {
-			return "Ese artículo ya existe..";
-		}
+	/**
+	 * añade un articulo a la lista de la compra.
+	 * 
+	 * @param articulo
+	 *            articulo a añadir a la lista de la compra.
+	 * @return Devuelve una cadena exitosa.
+	 * @throws ArticuloYaExisteException
+	 *             Cuando el articulo ya existe en la lista de la compra.
+	 */
+	String annadir(Articulo articulo) throws ArticuloYaExisteException {
+		if (listaDeLaCompra.contains(articulo))
+			throw new ArticuloYaExisteException();
 		listaDeLaCompra.add(articulo);
 		return "Artículo añadido con éxito.";
 	}
 
-	String eliminar(Articulo articulo) {
-		if (!listaDeLaCompra.contains(articulo)) {
-			return "Ese artículo no existe..";
-		}
+	/**
+	 * Elimina un articulo de la lista de la compra.
+	 * 
+	 * @param articulo
+	 *            articulo a añadir a la lista.
+	 * @return Devuelve un mensaje exitoso.
+	 * @throws ArticuloNoExisteException
+	 *             Cuando el articulo no existe.
+	 */
+	String eliminar(Articulo articulo) throws ArticuloNoExisteException {
+		if (!listaDeLaCompra.contains(articulo))
+			throw new ArticuloNoExisteException();
 		listaDeLaCompra.remove(articulo);
 		return "Artículo eliminado con éxito.";
 	}
 
-	// String aumentarExistencias(int cantidad, Articulo articulo) {
-	// if (!listaDeLaCompra.contains(articulo)) {
-	// return "Ese artículo no existe..";
-	// }
-	// articulo.comprar(cantidad);
-	// return "Artículo " + articulo.getNombre() + " ha aumentado sus
-	// existencias en " + cantidad;
-	// }
-
-	String consumirExistencias(int cantidad, String articulo) {
+	/**
+	 * Aumenta las existencias del articulo.
+	 * 
+	 * @param cantidad
+	 *            cantidad que aumentara las existencias.
+	 * @param articulo
+	 *            articulo en cuestion.
+	 * @return Devuelve una cadena concatenando el nombre del articulo y la
+	 *         cantidad que se ha aumentado.
+	 * @throws ExistenciasNegativasException
+	 *             Cuando las existencias del articulo son negativas.
+	 * @throws CantidadNegativaException
+	 *             Cuando la cantidad introducida es negativa.
+	 * @throws IndexOutOfBoundsException
+	 *             Cuando no se encuentre el articulo.
+	 * @throws ArticuloNoExisteException
+	 *             Cuando no exista el articulo en la lista de la compra.
+	 */
+	String aumentarExistencias(int cantidad, Articulo articulo) throws ExistenciasNegativasException,
+			CantidadNegativaException, IndexOutOfBoundsException, ArticuloNoExisteException {
 		if (!listaDeLaCompra.contains(articulo)) {
-			return "Ese artículo no existe..";
+			throw new ArticuloNoExisteException();
 		}
+		this.getArticulo(articulo).comprar(cantidad);
+		return "Artículo " + articulo.getNombre() + " ha aumentado sus existencias en " + cantidad;
+	}
 
-		this.getArticulo(articulo).consumir(5);
+	/**
+	 * Consume un numero de existencias de un articulo determinado.
+	 * 
+	 * @param cantidad
+	 *            cantidad que disminuira las existencias.
+	 * @param articulo
+	 *            articulo en cuestion.
+	 * @return Devuelve una cadena con el articulo y la cantidad que se
+	 *         disminuyo las existencias.
+	 * @throws ArticuloNoExisteException
+	 *             Cuando no exista el articulo en la lista de la compra.
+	 * @throws ExistenciasNegativasException
+	 *             Cuando las existencias del articulo son negativas.
+	 * @throws IndexOutOfBoundsException
+	 *             Cuando no se encuentre el articulo.
+	 */
+	String consumirExistencias(int cantidad, Articulo articulo)
+			throws ArticuloNoExisteException, ExistenciasNegativasException, IndexOutOfBoundsException {
+		if (!listaDeLaCompra.contains(articulo)) {
+			throw new ArticuloNoExisteException();
+		}
+		this.getArticulo(articulo).consumir(cantidad);
 		return "Se han consumido " + cantidad + " existencias de "
 				+ listaDeLaCompra.get(listaDeLaCompra.indexOf(articulo)).getNombre();
 	}
 
-	Articulo getArticulo(String articulo) {
+	/**
+	 * devuelve el articulo en cuestion
+	 * 
+	 * @param articulo
+	 *            articulo en cuestion.
+	 * @return devuelve la busqueda del articulo en el ArrayList
+	 * @throws ArticuloNoExisteException
+	 *             Cuando no existe en articulo introducido.
+	 * @throws IndexOutOfBoundsException
+	 *             Cuando no se encuentra el articulo.
+	 */
+	Articulo getArticulo(Articulo articulo) throws ArticuloNoExisteException, IndexOutOfBoundsException {
+		if (!listaDeLaCompra.contains(articulo))
+			throw new ArticuloNoExisteException();
 		return listaDeLaCompra.get(listaDeLaCompra.indexOf(articulo));
 	}
 
-	@Override
-	public String toString() {
-		return "ListaDeLaCompra [\n" + listaDeLaCompra + "\n]";
+	/**
+	 * Altera el numero de existencias minimas que tiene que tener el articulo.
+	 * 
+	 * @param articulo
+	 *            articulo a alterar.
+	 * @param cantidadMinima
+	 *            Nueva cantidad minima de existencias.
+	 * @throws ArticuloNoExisteException
+	 *             Cuando el articulo no existe.
+	 * @throws MinimoExistenciasNegativasException
+	 *             Cuando el numero de existencias negativas introducidas es
+	 *             negativo.
+	 */
+	public void alterarExistenciasMinimas(Articulo articulo, int cantidadMinima)
+			throws ArticuloNoExisteException, MinimoExistenciasNegativasException {
+		if (!listaDeLaCompra.contains(articulo)) {
+			throw new ArticuloNoExisteException();
+		}
+		if (cantidadMinima < 0) {
+			throw new MinimoExistenciasNegativasException();
+		}
+		this.getArticulo(articulo).modificarExistenciasMinimas(cantidadMinima);
 	}
 
+	/**
+	 * Muestra la lista de articulos.
+	 * 
+	 * @return Devuelve una cadena concatenada con todos los articulos de la
+	 *         lista.
+	 * @throws ListaDeLaCompraVaciaException
+	 *             Cuando la lista de la compra esta vacia.
+	 */
+	public String mostrarListaArticulos() throws ListaDeLaCompraVaciaException {
+		Iterator<Articulo> it = listaDeLaCompra.iterator();
+		String cadena = "";
+		int i = 1;
+		if (listaDeLaCompra.isEmpty())
+			throw new ListaDeLaCompraVaciaException();
+		while (it.hasNext()) {
+			cadena += "Articulo número " + i++ + ": " + it.next();
+		}
+		return cadena;
+	}
+
+	/**
+	 * Muestra la lista de aquellos articulos cuyas existencias estan por debajo
+	 * de las minimas.
+	 * 
+	 * @return Devuelve una cadena concatenada con cada articulo de la lista de
+	 *         la compra.
+	 * @throws ListaDeLaCompraVaciaException
+	 *             Cuando la lista de la compra esta vacia.
+	 */
+	public String mostrarListaDeLaCompra() throws ListaDeLaCompraVaciaException {
+		Iterator<Articulo> iterator = listaDeLaCompra.iterator();
+		String cadena = "Lista de la compra:\n";
+		int i = 1;
+		int contador = 0;
+		while (iterator.hasNext()) {
+			Articulo articulo = iterator.next();
+			if (articulo.getExistencias() < articulo.getCantidadMinima()) {
+				cadena += "\tArticulo " + i++ + ": \t" + articulo;
+				contador++;
+			}
+		}
+		if (contador == 0) {
+			throw new ListaDeLaCompraVaciaException();
+		}
+		return cadena;
+	}
 }

@@ -29,25 +29,50 @@ package listaDeLaCompra;
  *
  */
 public class Articulo {
+	/**
+	 * Nombre del art&iacute;culo.
+	 */
 	private String nombre;
+	/**
+	 * Cantidad m&iacute;nima de existencias en el art&iacute;culo.
+	 */
 	private int cantidadMinima;
+	/**
+	 * Existencias del art&iacute;culo en la despensa.
+	 */
 	private int existencias;
 
-	Articulo(String nombre, int cantidadMinima, int existencias) throws NombreNoValidoException {
+	/**
+	 * Constructor de art&iacute;culo.
+	 * 
+	 * @param nombre
+	 *            Nombre del art&iacute;culo.
+	 * @param cantidadMinima
+	 *            Cantidad m&iacute;nima de existencias en el art&iacute;culo.
+	 * @param existencias
+	 *            Existencias del art&iacute;culo en la despensa.
+	 * @throws NombreNoValidoException
+	 *             Cuando el nombre no es v&aacute;lido.
+	 * @throws ExistenciasNegativasException
+	 *             Cuando las existencias son negativas.
+	 * @throws MinimoExistenciasNegativasException
+	 *             Cuando el m&iacute;nimo de existencias son negativas.
+	 */
+	Articulo(String nombre, int cantidadMinima, int existencias)
+			throws NombreNoValidoException, ExistenciasNegativasException, MinimoExistenciasNegativasException {
 		setNombre(nombre);
 		setCantidadMinima(cantidadMinima);
 		setExistencias(existencias);
 	}
 
-//	private Articulo crearArticulo(String nombre, int cantidadMinima, int existencias) throws NombreNoValidoException {
-//		if (nombre == null || cantidadMinima == 0 || existencias == 0)
-//			return null;
-//		setNombre(nombre);
-//		setCantidadMinima(cantidadMinima);
-//		setExistencias(existencias);
-//		return null;
-//	}
-
+	/**
+	 * Constructor de articulo.
+	 * 
+	 * @param nombre
+	 *            Nombre del art&iacute;culo.
+	 * @throws NombreNoValidoException
+	 *             Cuando el nombre no es v&aacute;lido.
+	 */
 	Articulo(String nombre) throws NombreNoValidoException {
 		setNombre(nombre);
 	}
@@ -56,6 +81,14 @@ public class Articulo {
 		return nombre;
 	}
 
+	/**
+	 * Modifica el estado del campo nombre.
+	 * 
+	 * @param nombre
+	 *            Nombre del art&iacute;culo.
+	 * @throws NombreNoValidoException
+	 *             Cuando el nombre no es v&aacute;lido.
+	 */
 	private void setNombre(String nombre) throws NombreNoValidoException {
 		if (nombre.length() == 0)
 			throw new NombreNoValidoException();
@@ -66,7 +99,17 @@ public class Articulo {
 		return cantidadMinima;
 	}
 
-	private void setCantidadMinima(int cantidadMinima) {
+	/**
+	 * Modifica el estado del campo cantidadMinima.
+	 * 
+	 * @param cantidadMinima
+	 *            Cantidad minima del producto.
+	 * @throws MinimoExistenciasNegativasException
+	 *             Cuando el minimo de existencias es negativo.
+	 */
+	private void setCantidadMinima(int cantidadMinima) throws MinimoExistenciasNegativasException {
+		if (cantidadMinima < 0)
+			throw new MinimoExistenciasNegativasException();
 		this.cantidadMinima = cantidadMinima;
 	}
 
@@ -74,16 +117,60 @@ public class Articulo {
 		return existencias;
 	}
 
-	private void setExistencias(int existencias) {
+	/**
+	 * Modifica el estado del campo Existencias del articulo.
+	 * 
+	 * @param existencias
+	 *            existencias del articulo.
+	 * @throws ExistenciasNegativasException
+	 *             Cuando las existencias son negativas.
+	 */
+	private void setExistencias(int existencias) throws ExistenciasNegativasException {
+		if (existencias < 0)
+			throw new ExistenciasNegativasException();
 		this.existencias = existencias;
 	}
 
-	void consumir(int cantidad) {
+	/**
+	 * Disminuye la cantidad de existencias que posee el articulo.
+	 * 
+	 * @param cantidad
+	 *            cantidad la cual disminuira las existencias del articulo.
+	 * @throws ExistenciasNegativasException
+	 *             Cuando las existencias son negativas.
+	 */
+	void consumir(int cantidad) throws ExistenciasNegativasException {
 		setExistencias(getExistencias() - cantidad);
 	}
 
-	void comprar(int cantidad) {
+	/**
+	 * Comprar existencias.
+	 * 
+	 * @param cantidad
+	 *            cantidad a comprar.
+	 * @throws ExistenciasNegativasException
+	 *             Cuando las existencias son negativas.
+	 * @throws CantidadNegativaException
+	 *             Cuando la cantidad introducida es negativa.
+	 */
+	void comprar(int cantidad) throws ExistenciasNegativasException, CantidadNegativaException {
+		if (cantidad < 0)
+			throw new CantidadNegativaException();
 		setExistencias(getExistencias() + cantidad);
+	}
+
+	/**
+	 * Modifica las existencias minimas del articulo.
+	 * 
+	 * @param minimoExistencias
+	 *            Nuevas existencias minimas.
+	 * @throws MinimoExistenciasNegativasException
+	 *             Cuando las existencias minimas introducidas son negativas.
+	 */
+	void modificarExistenciasMinimas(int minimoExistencias) throws MinimoExistenciasNegativasException {
+		if (minimoExistencias < 0)
+			throw new MinimoExistenciasNegativasException();
+		setCantidadMinima(minimoExistencias);
 	}
 
 	@Override
@@ -111,9 +198,11 @@ public class Articulo {
 		return true;
 	}
 
+	/**
+	 * Muestra el articulo.
+	 */
 	@Override
 	public String toString() {
-		return "Articulo [nombre=" + nombre + ", cantidadMinima=" + cantidadMinima + ", existencias=" + existencias
-				+ "]";
+		return "\n\tNombre: " + nombre + "\n\tCantidad mínima: " + cantidadMinima + "\n\tExistencias: " + existencias;
 	}
 }

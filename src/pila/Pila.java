@@ -2,6 +2,8 @@ package pila;
 
 import java.util.ArrayList;
 
+import cola.ColaVaciaException;
+
 /**
  * Crea una clase genérica Pila (debe de aceptar cualquier tipo de objeto
  * concreto , utiliza generics ) . Recuerda que has de evitar la interacción con
@@ -53,9 +55,25 @@ public class Pila<T> {
 	 * @throws PilaVaciaException
 	 */
 	T extraer() throws PilaVaciaException {
-		if (pila.size() == 0)
+		if (pila.isEmpty())
 			throw new PilaVaciaException();
 		return pila.remove(pila.size() - 1);
+	}
+
+	/**
+	 * Elimina elementos de la pila.
+	 * 
+	 * @return Devuelve una cadena con todos los elementos de la pila.
+	 * @throws PilaVaciaException
+	 */
+	String extraerCompletamente() throws PilaVaciaException {
+		String cadena = "";
+		if (isEmpty())
+			throw new PilaVaciaException();
+		while (!isEmpty()) {
+			cadena += "Extraigo de la pila: " + extraer() + "\n";
+		}
+		return cadena;
 	}
 
 	/**
@@ -64,7 +82,7 @@ public class Pila<T> {
 	 * @return Devuelve la cima de la pila.
 	 */
 	T cima() throws PilaVaciaException {
-		if (pila.size() == 0)
+		if (pila.isEmpty())
 			throw new PilaVaciaException();
 		return pila.get(pila.size() - 1);
 	}
@@ -84,6 +102,15 @@ public class Pila<T> {
 	@Override
 	public String toString() {
 		return "" + pila + "";
+	}
+
+	/**
+	 * M&eacute;todo para mostrar la pila.
+	 */
+	public String mostrar() throws PilaVaciaException {
+		if (isEmpty())
+			throw new PilaVaciaException();
+		return pila.toString();
 	}
 
 }

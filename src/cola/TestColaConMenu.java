@@ -115,11 +115,10 @@ public class TestColaConMenu {
 	 * vac&iacute;a
 	 */
 	private static void extraerCompletamente() {
-		while (!cola.IsEmpty())
-			try {
-				System.out.println("Extraigo de la cola: " + cola.extraer());
-			} catch (ColaVaciaException e) {
-				System.err.println("La cola está vacía..");
-			}
+		try {
+			System.out.println(cola.extraerCompletamente());
+		} catch (ColaVaciaException e) {
+			System.err.println("La cola está vacía..");
+		}
 	}
 }
